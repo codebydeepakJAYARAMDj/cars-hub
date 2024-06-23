@@ -1,0 +1,188 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: rgb(255, 251, 251) url('car.jpg') center center fixed;
+    background-blend-mode: darken;
+    background-size: cover;
+    background-position: center;
+}
+
+.main {
+    padding: 0 8%;
+}
+
+nav {
+    padding: 24px 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.logo h3 {
+    width: 150px;
+    font-size: 30px;
+    cursor: pointer;
+    color: rgb(255, 111, 0);
+}
+
+.nav-links {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-links a {
+    margin-left: 36px;
+    text-decoration: none;
+    color: aliceblue;
+    transition: background-color 0.3s, padding 0.3s;
+}
+
+.nav-links a:hover {
+    padding: 11px;
+    background-color: black;
+}
+
+.nav-links .btn {
+    background-color: rgb(255, 111, 0);
+    color: black;
+    padding: 10px 28px;
+    border-radius: 5px;
+}
+
+.content {
+    margin-top: 150px;
+    margin-left: 150px;
+    color: aliceblue;
+    animation: fadeInUp 1.5s ease-in-out;
+}
+
+.content h1 {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: textGlow 2s infinite alternate;
+}
+
+.search {
+    background: rgba(255, 255, 255, 0.8);
+    width: fit-content;
+    margin: 20px 0;
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    animation: fadeInUp 2s ease-in-out;
+}
+
+.search input {
+    background: transparent;
+    width: 300px;
+    border: 0;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.search input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    font-style: italic;
+}
+
+.search button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    border: none;
+    background-color: rgb(255, 111, 0);
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.search button:hover {
+    background-color: black;
+    transform: scale(1.1);
+}
+
+.car-details {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.car-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInItem 1s ease-in-out forwards;
+}
+
+.car-item:nth-child(odd) {
+    animation-delay: 0.2s;
+}
+
+.car-item:nth-child(even) {
+    animation-delay: 0.4s;
+}
+
+.car-item h2 {
+    margin-bottom: 10px;
+}
+
+.car-item img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.loading {
+    display: none;
+    font-size: 18px;
+    color: rgb(255, 111, 0);
+    margin: 20px 0;
+    animation: fadeInLoading 1s ease-in-out;
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLoading {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInItem {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes textGlow {
+    from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+    to { text-shadow: 0 0 20px rgba(255, 255, 255, 1); }
+}
