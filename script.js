@@ -1,43 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", function () {
     const searchButton = document.getElementById('search-button');
     const searchInput = document.getElementById('search-input');
     const carDetailsContainer = document.getElementById('car-details');
-    const loadingElement = document.getElementById('loading');
+    const loadingIndicator = document.getElementById('loading');
+    const historyButton = document.getElementById('history-button');
+    const historyContainer = document.getElementById('history');
+    const historyList = document.getElementById('history-list');
+    let searchHistory = [];
 
-    searchButton.addEventListener('click', () => {
+    searchButton.addEventListener('click', function () {
         const query = searchInput.value.trim();
         if (query) {
-            fetchCarDetails(query);
+            searchCar(query);
+            updateHistory(query);
         }
     });
 
-    async function fetchCarDetails(query) {
-        const url = `https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getTrims&keyword=${query}`;
-        try {
-            showLoading();
-            const response = await fetchJsonp(url);
-            const data = await response.json();
-            hideLoading();
+    historyButton.addEventListener('click', function () {
+        historyContainer.style.display = historyContainer.style.display === 'none' || !historyContainer.style.display ? 'block' : 'none';
+    });
 
-            if (data && data.Trims.length > 0) {
-                displayCarDetails(data.Trims);
+    async function searchCar(query) {
+        carDetailsContainer.innerHTML = '';
+        carDetailsContainer.style.display = 'none';
+        loadingIndicator.style.display = 'block';
+
+        try {
+            const response = await fetchJsonp(`https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getModels&make=${query}`, {
+                jsonpCallbackFunction: 'callback'
+            });
+            const data = await response.json();
+            const cars = data.Models;
+
+            if (cars.length > 0) {
+                displayCarDetails(cars);
             } else {
-                displayNoResults();
+                carDetailsContainer.innerHTML = `<p>No cars found for "${query}".</p>`;
+                carDetailsContainer.style.display = 'block';
             }
         } catch (error) {
-            console.error('Error fetching car details:', error);
-            hideLoading();
-            displayError();
+            carDetailsContainer.innerHTML = `<p>Error fetching car details. Please try again later.</p>`;
+            carDetailsContainer.style.display = 'block';
+        } finally {
+            loadingIndicator.style.display = 'none';
         }
-    }
-
-    function showLoading() {
-        loadingElement.style.display = 'block';
-        carDetailsContainer.style.display = 'none';
-    }
-
-    function hideLoading() {
-        loadingElement.style.display = 'none';
     }
 
     function displayCarDetails(cars) {
@@ -49,22 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Power:</strong> ${car.model_engine_power_ps} PS</p>
                 <p><strong>Fuel Type:</strong> ${car.model_engine_fuel}</p>
                 <p><strong>Transmission:</strong> ${car.model_transmission_type}</p>
-                <p><strong>Body Type:</strong> ${car.model_body}</p>
-                <p><strong>Doors:</strong> ${car.model_doors}</p>
-                <p><strong>Seats:</strong> ${car.model_seats}</p>
-                <p><strong>Drive:</strong> ${car.model_drive}</p>
             </div>
         `).join('');
         carDetailsContainer.style.display = 'block';
     }
 
-    function displayNoResults() {
-        carDetailsContainer.innerHTML = '<p>No results found. Please try another search.</p>';
-        carDetailsContainer.style.display = 'block';
-    }
-
-    function displayError() {
-        carDetailsContainer.innerHTML = '<p>There was an error fetching the car details. Please try again later.</p>';
-        carDetailsContainer.style.display = 'block';
+    function updateHistory(query) {
+        if (!searchHistory.includes(query)) {
+            searchHistory.push(query);
+            const listItem = document.createElement('li');
+            listItem.textContent = query;
+            historyList.appendChild(listItem);
+        }
     }
 });
