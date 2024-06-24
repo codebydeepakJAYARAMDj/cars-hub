@@ -161,6 +161,34 @@ nav {
     animation: fadeInLoading 1s ease-in-out;
 }
 
+.history {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    animation: fadeInUp 1.5s ease-in-out;
+}
+
+.history h2 {
+    margin-bottom: 10px;
+    color: rgb(255, 111, 0);
+}
+
+.history ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.history ul li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    animation: fadeInItem 1s ease-in-out forwards;
+}
+
 /* Keyframe animations */
 @keyframes fadeIn {
     from { opacity: 0; }
